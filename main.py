@@ -43,19 +43,26 @@ def estimate_noise(img):
     noise = np.sqrt(np.mean((img - M)**2))
     return noise
 
-def visualize_comparison(original, static, adaptive, title=""):
-    fig, axs = plt.subplots(1, 3, figsize=(15, 5))
+def visualize_comparison(original, static, adaptive, title="", metrics=None):
+    fig, axs = plt.subplots(1, 3, figsize=(12, 4))
+    
+    # Display images
     axs[0].imshow(original, cmap='gray')
     axs[0].set_title("Original")
+    
     axs[1].imshow(static, cmap='gray')
-    axs[1].set_title("Static Preprocessed")
+    axs[1].set_title(f"Static\nPSNR: {metrics['PSNR'][0]:.2f}, SSIM: {metrics['SSIM'][0]:.3f}\nEdges: {metrics['Edge Count'][0]}")
+    
     axs[2].imshow(adaptive, cmap='gray')
-    axs[2].set_title("Adaptive Preprocessed")
+    axs[2].set_title(f"Adaptive\nPSNR: {metrics['PSNR'][1]:.2f}, SSIM: {metrics['SSIM'][1]:.3f}\nEdges: {metrics['Edge Count'][1]}")
+
     for ax in axs:
         ax.axis('off')
-    plt.suptitle(title)
+
+    plt.suptitle(f"{title}\nOriginal Edges: {metrics['Edge Count'][2]}", fontsize=14, y=1.05)
     plt.tight_layout()
     plt.show()
+
 
 # ========== Preprocessing Pipelines ==========
 def static_preprocessing(img):
@@ -141,6 +148,8 @@ def evaluate_pipeline(original, static, adaptive):
 
     return results
 
+    
+
 # ========== Main Processing ==========
 def process_directory(directory, read_function, tag):
     print(f"Processing {tag.upper()} files...")
@@ -158,11 +167,12 @@ def process_directory(directory, read_function, tag):
         static = static_preprocessing(img)
         adaptive = adaptive_preprocessing(img)
 
-        # Show visual comparison
-        visualize_comparison(img, static, adaptive, f"{tag.upper()}: {filename}")
-
         # Evaluate quality metrics
-        evaluate_pipeline(img, static, adaptive)
+        metrics = evaluate_pipeline(img, static, adaptive)
+
+        # Show visual comparison with overlaid metrics
+        visualize_comparison(img, static, adaptive, f"{tag.upper()}: {filename}", metrics)
+
 
 
 if __name__ == '__main__':
