@@ -13,7 +13,9 @@ This project focuses on designing a **dynamic, adaptive preprocessing pipeline**
 - **DICOM (`.dcm`)**: Standard grayscale radiographs.
 - **RVG (`.rvg`)**: Simulated as DICOM-like structures (compatible with `pydicom`).
 
-### Project Structure:
+### 📁 Project Structure
+
+```
 DS_IN.../
 ├── Data Science Images/
 │   ├── dcm/                  # Folder containing DICOM (.dcm) files
@@ -21,6 +23,8 @@ DS_IN.../
 ├── Reference_Output_.../     # Folder to save or visualize output images
 ├── main.py                   # Main script to run preprocessing pipeline
 └── requirement.txt           # Python dependencies for the project
+```
+
 
 
 ### Reading Strategy:
@@ -135,8 +139,3 @@ Adaptive enhancement consistently achieves:
 
     ```bash
    python main.py
-
-
-
-
-
