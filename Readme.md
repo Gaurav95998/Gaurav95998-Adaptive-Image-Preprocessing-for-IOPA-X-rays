@@ -88,7 +88,7 @@ Heuristics based on quality metrics:
 - **Edge Count** (via Canny edge detection)
 
 #### Sample Output:
-![alt text](<Screenshot 2025-05-23 115305-1.png>)
+![alt text](<image.png>)
 
 
 ---
